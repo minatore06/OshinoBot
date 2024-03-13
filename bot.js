@@ -391,8 +391,7 @@ client.login(token)
 client.on('error', async err => {
     fs.writeFileSync('./err.log', err.message)
     try {
-        if (client)
-            await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err.message)
+        await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err.message)
         if (client && err.discordAPIError) client.user.lastMessage.channel.send(err.discordAPIRError.method)
     } catch (error) {
         console.error(error)
@@ -402,8 +401,7 @@ client.on('error', async err => {
 process.on('uncaughtException', async (err, origin) => {
     fs.writeFileSync('./err.log', err)
     try {
-        if (client)
-            await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err)
+        await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err)
     } catch (error) {
         console.error(error)
     }
@@ -413,8 +411,9 @@ process.on('uncaughtException', async (err, origin) => {
 
 process.on('exit', async (code) => {
     fs.writeFileSync('./gConfig.json', JSON.stringify(gConfig))
-    if (client){
-        console.log("sos")
+    try {
         (await client.users.fetch(bOwner)).send("Bot offline\n" + code)
+    } catch (error) {
+        console.log(error)
     }
 });

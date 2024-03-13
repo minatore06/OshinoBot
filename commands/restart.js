@@ -15,6 +15,7 @@ module.exports = {
 		fs.writeFileSync('./../gConfig.json', JSON.stringify(files.gConfig))
 		client.destroy()
 		process.on("exit", function () {
+			console.log("sos")
 			spawn('./../update.sh',
 			{
 				cwd: process.cwd(),
