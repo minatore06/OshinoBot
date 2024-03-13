@@ -15,12 +15,16 @@ module.exports = {
 		fs.writeFileSync('./../gConfig.json', JSON.stringify(files.gConfig))
 		client.destroy()
 		process.on("exit", function () {
-			spawn('./../update.sh',
-			{
-				cwd: process.cwd(),
-				detached: true,
-				stdio: "inherit"
-			})
+			try {
+				spawn('./../update.sh',
+				{
+					cwd: process.cwd(),
+					detached: true,
+					stdio: "inherit"
+				})
+			} catch (error) {
+				console.log(error)
+			}
 		});
 		console.log("Restarting");
 		process.exit(0);
