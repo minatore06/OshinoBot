@@ -12,7 +12,7 @@ module.exports = {
 		let target = interaction.user
 		if(target.id!=files.config.bOwner)return await interaction.reply({content:"El psy kongroo!", ephemeral:true})
 		await interaction.reply({content:"GN", ephemeral:true})
-		fs.writeFileSync('./../gConfig.json', JSON.stringify(files.gConfig))
+		fs.writeFileSync('./gConfig.json', JSON.stringify(files.gConfig))
 		console.log("Shutted down")
 		client.destroy()
 		process.exit(0)
