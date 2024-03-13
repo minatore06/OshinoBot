@@ -117,21 +117,21 @@ client.on('messageCreate', async message => {
                 if (!debug)
                 {
                     debug = true;
-                    message.reply("[El psy congroo](https://cdn.donmai.us/original/bf/a5/bfa59a99a9a17fc753973071ef4694a4.gif)")
+                    message.reply("El psy congroo[!](https://cdn.donmai.us/original/bf/a5/bfa59a99a9a17fc753973071ef4694a4.gif)")
                         .then(msg => eliminazioneMess(message, msg, "10s"));
                 }
                 else
                 {
                     debug = false;
-                    message.reply("[I'm back](https://media.tenor.com/UHibsWWoOpQAAAAd/monogatari-oshino.gif)")
+                    message.reply("I'm back[!](https://media.tenor.com/UHibsWWoOpQAAAAd/monogatari-oshino.gif)")
                         .then(msg => eliminazioneMess(message, msg, "10s"));
                 }
             } else {
                 if (debug){
-                    message.reply("[Un umano come te non dovrebbe disturbarmi durante la mia pausa](https://i.pinimg.com/originals/92/f1/72/92f1724b4a5dfe1b705bf4bac60a50c6.gif)")
+                    message.reply("Un umano come te non dovrebbe disturbarmi durante la mia pausa[.](https://i.pinimg.com/originals/92/f1/72/92f1724b4a5dfe1b705bf4bac60a50c6.gif)")
                         .then(msg => eliminazioneMess(message, msg, "10s"));
                 } else {
-                    message.reply("[You're not my master and you don't know this command](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/628788cd-1b38-46ed-86e3-4af1ab94cf97/d6sysx0-f298bccb-2217-43eb-82d9-90ed972498fa.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyODc4OGNkLTFiMzgtNDZlZC04NmUzLTRhZjFhYjk0Y2Y5N1wvZDZzeXN4MC1mMjk4YmNjYi0yMjE3LTQzZWItODJkOS05MGVkOTcyNDk4ZmEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.q5YHDMz-daqna4LMoJ3N9UWfULm0H_n-P0qVy9HyNwc)")
+                    message.reply("You're not my master and you don't know this command[.](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/628788cd-1b38-46ed-86e3-4af1ab94cf97/d6sysx0-f298bccb-2217-43eb-82d9-90ed972498fa.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyODc4OGNkLTFiMzgtNDZlZC04NmUzLTRhZjFhYjk0Y2Y5N1wvZDZzeXN4MC1mMjk4YmNjYi0yMjE3LTQzZWItODJkOS05MGVkOTcyNDk4ZmEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.q5YHDMz-daqna4LMoJ3N9UWfULm0H_n-P0qVy9HyNwc)")
                         .then(msg => eliminazioneMess(message, msg, "10s"));
                 }
             }
