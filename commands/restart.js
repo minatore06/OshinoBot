@@ -17,7 +17,7 @@ module.exports = {
 		client.destroy()
 		process.on("exit", function () {
 			try {
-				spawn('./../update.sh',
+				spawn('./update.sh',
 				{
 					cwd: process.cwd(),
 					detached: true,
