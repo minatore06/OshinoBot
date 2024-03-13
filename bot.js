@@ -1,5 +1,4 @@
 const process = require('node:process');
-const { spawn } = require('child_process');
 const { Client, GatewayIntentBits, ActivityType, ButtonStyle, ChannelType, Collection } = require('discord.js');
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('@discordjs/builders');
 const ms = require('ms');
