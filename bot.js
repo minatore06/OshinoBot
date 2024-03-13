@@ -388,7 +388,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
 client.login(token)
 
 client.on('error', async err => {
-    fs.writeFileSync('./err.log', err.message)
+    fs.writeFileSync('./err.log',  new Date().toISOString() + "\n" + err.message)
     try {
         await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err.message)
         if (client && err.discordAPIError) client.user.lastMessage.channel.send(err.discordAPIRError.method)
@@ -398,7 +398,7 @@ client.on('error', async err => {
 })
 
 process.on('uncaughtException', async (err, origin) => {
-    fs.writeFileSync('./err.log', err)
+    fs.writeFileSync('./err.log', new Date().toISOString() + "\n" + err)
     try {
         await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err)
     } catch (error) {
