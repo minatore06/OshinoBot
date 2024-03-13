@@ -413,8 +413,8 @@ process.on('uncaughtException', async (err, origin) => {
 
 process.on('exit', async (code) => {
     fs.writeFileSync('./gConfig.json', JSON.stringify(gConfig))
-    console.log("sos1")
-    if (client)
+    if (client){
+        console.log("sos")
         (await client.users.fetch(bOwner)).send("Bot offline\n" + code)
-    console.log("sos2")
+    }
 });
