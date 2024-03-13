@@ -31,8 +31,18 @@ for (const file of commandFiles) {
 function eliminazioneMess(message, msg, wait)//funzione per eliminare il messaggio di risposta
 {
   setTimeout(function () {
-    if (msg) msg.delete();
-    if (message) message.delete();
+    if (msg) {
+        msg.delete()
+        .catch(err => {
+            console.log(err)
+        });
+    }
+    if (message) {
+        message.delete()
+        .catch(err => {
+            console.log(err)
+        });
+    }
   }, ms(wait))
   return;
 }
@@ -164,7 +174,7 @@ client.on('messageCreate', async message => {
                         {
                             "title": "Clubs control pannel",
                             "description": "🔑 Se sei il proprietario di un canale temporaneo\n🕒 avrai la possibilità di: \n\n🔄 Cambiare il nome e il limite 🏷️\n🔒 Bloccare o sbloccare l'accesso del canale 🚫/✅\n➕ Aggiungere o rimuovere membri dalla whitelist ✨\n🚪 Cacciare un membro dal canale 🚷",
-                            "url": "https://timelinecovers.pro/facebook-cover/download/anime-girls-und-panzer-all-the-girls-facebook-cover.jpg",
+                            "url": "https://youtu.be/D39fKQIJSBY?si=1ctTuoNtPYjclYUm",
                             "color": 16077059,
                             "footer": {
                               "text": "AMMINISTRAZIONE DI ANIMEITALIA",
@@ -178,6 +188,9 @@ client.on('messageCreate', async message => {
                     components:[row, row2]
                 })
                 message.delete()
+                .catch(err => {
+                    console.log(err)
+                })
             } catch (error) {
                 console.log(error)
             }
@@ -291,7 +304,11 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
                         if(!oldState.channel)return;
                         for (let i = 0; i < voiceOwn.length; i++){
                             if(oldState.channel.id == voiceOwn[i][0]){
-                                if(oldState.channel.client.user.id == client.user.id)oldState.channel.delete("Stanza vuota");
+                                try {
+                                    if(oldState.channel.client.user.id == client.user.id)oldState.channel.delete("Stanza vuota");
+                                } catch (err) {
+                                    console.log(err)
+                                }
                                 if(voiceOwn[i]&&voiceOwn[i][2])clearTimeout(voiceOwn[i][2]);
                                 voiceOwn.splice(i,1);
                             }
@@ -305,7 +322,11 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
                     if(voiceOwn[i][1] === oldState.member.id && voiceOwn[i][0] === oldState.channel.id) {
                         voiceOwn[i][2] = setTimeout( function(){
                             if(!oldState.channel)return;
-                            if(oldState.channel.client.user.id == client.user.id)oldState.channel.delete('Proprietario assente');
+                            try {
+                                if(oldState.channel.client.user.id == client.user.id)oldState.channel.delete('Proprietario assente');
+                            } catch (err) {
+                                console.log(err)
+                            }
                             voiceOwn.splice(i,1);
                         }, 300000)
                     }
