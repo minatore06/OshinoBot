@@ -121,6 +121,8 @@ client.on('messageCreate', async message => {
             }
             break;
         case "!send":
+            if (debug)
+                return console.log("Modalità debug attiva, interazione ignorata");
             if (user.id !== bOwner) {
                 message.reply("You're not my master and you don't know this command")
                     .then(msg => eliminazioneMess(message, msg, "5s"));
@@ -162,15 +164,16 @@ client.on('messageCreate', async message => {
                         {
                             "title": "Clubs control pannel",
                             "description": "🔑 Se sei il proprietario di un canale temporaneo\n🕒 avrai la possibilità di: \n\n🔄 Cambiare il nome e il limite 🏷️\n🔒 Bloccare o sbloccare l'accesso del canale 🚫/✅\n➕ Aggiungere o rimuovere membri dalla whitelist ✨\n🚪 Cacciare un membro dal canale 🚷",
+                            "url": "https://timelinecovers.pro/facebook-cover/download/anime-girls-und-panzer-all-the-girls-facebook-cover.jpg",
                             "color": 16077059,
-                            "thumbnail": {
-                              "url": "https://cdn.discordapp.com/attachments/577544194382626836/1216697237506232330/Progetto_senza_titolo_10.gif?ex=6601549a&is=65eedf9a&hm=90aa795d06232fc585589237ece307826b733b522d2c096eed126e2c1bdbc618&"
-                            },
                             "footer": {
-                                "text": "Powered by "+(await client.users.fetch(bOwner)).tag,
-                                "icon_url": (await client.users.fetch(bOwner)).displayAvatarURL({dynamic:true})
+                              "text": "AMMINISTRAZIONE DI ANIMEITALIA",
+                              "icon_url": "https://media.discordapp.net/attachments/1216360069973807105/1217575491276640386/Progetto_senza_titolo_5.png?ex=6604868a&is=65f2118a&hm=963dc2ef52b66365a39c9cb4dc6392a94b59b8636b3473676c640a07c01db566&=&format=webp&quality=lossless&width=462&height=462"
                             },
-                        }
+                            "image": {
+                              "url": "https://cdn.discordapp.com/attachments/1216360069973807105/1217574265239506994/RUOLI_6.png?ex=66048566&is=65f21066&hm=239e79f8ebb858885c58abecd00784d6a3d65c090e7b0a4f831a80d313a6efd7&"
+                            }
+                          }
                     ], 
                     components:[row, row2]
                 })
