@@ -28,6 +28,16 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+function eliminazioneMess(message, msg, wait)//funzione per eliminare il messaggio di risposta
+{
+  setTimeout(function () {
+    if (msg) msg.delete();
+    if (message) message.delete();
+  }, ms(wait))
+  return;
+}
+
+
 function activityLoop(){
     setTimeout(() => {
         client.user.setActivity("There's no /help",{type: ActivityType.Listening})
@@ -105,11 +115,16 @@ client.on('messageCreate', async message => {
                     debug = false;
                     message.reply("I'm back");
                 }
+            } else {
+                message.reply("You're not my master and you don't know this command")
+                    .then(msg => eliminazioneMess(message, msg, "5s"));
             }
             break;
         case "!send":
-            if (user.id !== bOwner) return
-            console.log("sdas")
+            if (user.id !== bOwner) {
+                message.reply("You're not my master and you don't know this command")
+                    .then(msg => eliminazioneMess(message, msg, "5s"));
+            }
             try {
                 let row = new ActionRowBuilder()
                     .addComponents(
@@ -141,7 +156,25 @@ client.on('messageCreate', async message => {
                             .setLabel("Rimuovi membro")
                             .setStyle(ButtonStyle.Danger)
                     )
-                    await message.channel.send({content:"Control pannel super ganzo", components:[row, row2]})
+                
+                await message.channel.send({
+                    embeds: [
+                        {
+                            "title": "Clubs control pannel",
+                            "description": "Se sei il proprietario di una stanza temporanea, avrai la possibilità di:\n✏️Cambiarne il nome e limite;\n🔒Bloccarne/Sbloccarne l'accesso;\n📝Aggiungere/Rimuovere membri alla whitelist;\n⛔Kickare un membro.",
+                            "color": 16077059,
+                            "thumbnail": {
+                              "url": "https://cdn.discordapp.com/attachments/577544194382626836/1216697237506232330/Progetto_senza_titolo_10.gif?ex=6601549a&is=65eedf9a&hm=90aa795d06232fc585589237ece307826b733b522d2c096eed126e2c1bdbc618&"
+                            },
+                            "footer": {
+                                "text": "Powered by "+(await client.users.fetch(bOwner)).tag,
+                                "icon_url": (await client.users.fetch(bOwner)).displayAvatarURL({dynamic:true})
+                            },
+                        }
+                    ], 
+                    components:[row, row2]
+                })
+                message.delete()
             } catch (error) {
                 console.log(error)
             }
