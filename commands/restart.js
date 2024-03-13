@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const process = require('node:process');
+const { spawn } = require('child_process');
 const fs = require('fs');
 
 module.exports = {
