@@ -33,13 +33,13 @@ function eliminazioneMess(message, msg, wait)//funzione per eliminare il messagg
     if (msg) {
         msg.delete()
         .catch(err => {
-            console.log(err)
+            console.log(new Date().toISOString() + "\n" + err)
         });
     }
     if (message) {
         message.delete()
         .catch(err => {
-            console.log(err)
+            console.log(new Date().toISOString() + "\n" + err)
         });
     }
   }, ms(wait))
@@ -188,12 +188,11 @@ client.on('messageCreate', async message => {
                 })
                 message.delete()
                 .catch(err => {
-                    console.log(err)
+                    console.log(new Date().toISOString() + "\n" + err)
                 })
             } catch (error) {
-                console.log(error)
+                console.log(new Date().toISOString() + "\n" + error)
             }
-            console.log("sdas")
             break;
     }
 })
@@ -211,7 +210,7 @@ client.on('interactionCreate', async interaction => {
     };
 
     if (debug)
-        return console.log("Modalità debug attiva, interazione ignorata");
+        return console.log(new Date().toISOString() + "\n" + "Modalità debug attiva, interazione ignorata");
     
     if(interaction.isAutocomplete()){
         let focused = interaction.options.getFocused(true)
@@ -291,7 +290,7 @@ client.on('interactionCreate', async interaction => {
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
     if(debug)
-        return console.log("Modalità debug attiva, evento ignorato");
+        return console.log(new Date().toISOString() + "\n" + "Modalità debug attiva, evento ignorato");
     if(oldState){//uscito dalla stanza
         var oldChannel = oldState.channel
         var OldMember = oldState.member
@@ -306,7 +305,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
                                 try {
                                     if(oldState.channel.client.user.id == client.user.id)oldState.channel.delete("Stanza vuota");
                                 } catch (err) {
-                                    console.log(err)
+                                    console.log(new Date().toISOString() + "\n" + err)
                                 }
                                 if(voiceOwn[i]&&voiceOwn[i][2])clearTimeout(voiceOwn[i][2]);
                                 voiceOwn.splice(i,1);
@@ -324,7 +323,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
                             try {
                                 if(oldState.channel.client.user.id == client.user.id)oldState.channel.delete('Proprietario assente');
                             } catch (err) {
-                                console.log(err)
+                                console.log(new Date().toISOString() + "\n" + err)
                             }
                             voiceOwn.splice(i,1);
                         }, 300000)
@@ -372,7 +371,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
                         }, 1000)
                     }).catch(console.error)
                 } catch (error) {
-                    console.log(error)
+                    console.log(new Date().toISOString() + "\n" + error)
                 }
             
             }else{
@@ -393,7 +392,7 @@ client.on('error', async err => {
         await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err.message)
         if (client && err.discordAPIError) client.user.lastMessage.channel.send(err.discordAPIRError.method)
     } catch (error) {
-        console.error(error)
+        console.error(new Date().toISOString() + "\n" + error)
     }
 })
 
@@ -402,7 +401,7 @@ process.on('uncaughtException', async (err, origin) => {
     try {
         await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err)
     } catch (error) {
-        console.error(error)
+        console.error(new Date().toISOString() + "\n" + error)
     }
 /*     client.destroy()
     process.exit(0) */
@@ -413,6 +412,6 @@ process.on('exit', async (code) => {
     try {
         (await client.users.fetch(bOwner)).send("Bot offline\n" + code)
     } catch (error) {
-        console.log(error)
+        console.log(new Date().toISOString() + "\n" + error)
     }
 });

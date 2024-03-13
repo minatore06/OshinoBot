@@ -30,7 +30,7 @@ module.exports = {
         await target.disableCommunicationUntil(Date.now()+(ms(durata+unita)), reason)
         .then(await interaction.editReply("Timeout succeded"))
         .catch(async(err) => {
-            console.log(err)
+            console.log(new Date().toISOString() + "\n" + err)
             await interaction.editReply(err)
             return;
         })

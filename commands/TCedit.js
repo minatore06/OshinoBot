@@ -35,7 +35,7 @@ module.exports = {
                         )
                     await interaction.showModal(modal)
                         .catch(async(err) => {
-                            console.log(err)
+                            console.log(new Date().toISOString() + "\n" + err)
                             return await interaction.reply({content: 'C\'è stato un errore', ephemeral: true})
                         })
                     const filter = (inter) => inter.customId === 'TCedit';
@@ -54,7 +54,7 @@ module.exports = {
                                 inter.reply({content:'Modifiche alla stanza eseguite', ephemeral: true})
                             })
                             .catch(async(err) => {
-                                console.log(err)
+                                console.log(new Date().toISOString() + "\n" + err)
                                 await interaction.followUp({content:'Tempo scaduto', ephemeral: true})
                             })
                         

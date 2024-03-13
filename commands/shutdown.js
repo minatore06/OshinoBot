@@ -13,7 +13,7 @@ module.exports = {
 		if(target.id!=files.config.bOwner)return await interaction.reply({content:"El psy kongroo!", ephemeral:true})
 		await interaction.reply({content:"GN", ephemeral:true})
 		fs.writeFileSync('./gConfig.json', JSON.stringify(files.gConfig))
-		console.log("Shutted down")
+		console.log(new Date().toISOString() + "\n" + "Shutted down")
 		client.destroy()
 		process.exit(0)
 	}

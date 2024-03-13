@@ -24,10 +24,10 @@ module.exports = {
 					stdio: "inherit"
 				})
 			} catch (error) {
-				console.log(error)
+				console.log(new Date().toISOString() + "\n" + error)
 			}
 		});
-		console.log("Restarting");
+		console.log(new Date().toISOString() + "\n" + "Restarting");
 		process.exit(0);
 	}
 }
