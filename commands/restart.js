@@ -12,10 +12,10 @@ module.exports = {
 		let target = interaction.user
 		if(target.id!=files.config.bOwner)return await interaction.reply({content:"El psy kongroo!", ephemeral:true})
 		await interaction.reply({content:"Restarting...", ephemeral:true})
-		fs.writeFileSync('./gConfig.json', JSON.stringify(files.gConfig))
+		fs.writeFileSync('./../gConfig.json', JSON.stringify(files.gConfig))
 		client.destroy()
 		process.on("exit", function () {
-			spawn('./update.sh',
+			spawn('./../update.sh',
 			{
 				cwd: process.cwd(),
 				detached: true,
