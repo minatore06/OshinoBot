@@ -161,7 +161,7 @@ client.on('messageCreate', async message => {
                     embeds: [
                         {
                             "title": "Clubs control pannel",
-                            "description": "Se sei il proprietario di una stanza temporanea, avrai la possibilità di:\n✏️Cambiarne il nome e limite;\n🔒Bloccarne/Sbloccarne l'accesso;\n📝Aggiungere/Rimuovere membri alla whitelist;\n⛔Kickare un membro.",
+                            "description": "🔑 Se sei il proprietario di un canale temporaneo\n🕒 avrai la possibilità di: \n\n🔄 Cambiare il nome e il limite 🏷️\n🔒 Bloccare o sbloccare l'accesso del canale 🚫/✅\n➕ Aggiungere o rimuovere membri dalla whitelist ✨\n🚪 Cacciare un membro dal canale 🚷",
                             "color": 16077059,
                             "thumbnail": {
                               "url": "https://cdn.discordapp.com/attachments/577544194382626836/1216697237506232330/Progetto_senza_titolo_10.gif?ex=6601549a&is=65eedf9a&hm=90aa795d06232fc585589237ece307826b733b522d2c096eed126e2c1bdbc618&"
@@ -375,9 +375,9 @@ client.on('error', async err => {
 })
 
 process.on('uncaughtException', async (err, origin) => {
-    fs.writeFileSync('./err.log', err.message)
+    fs.writeFileSync('./err.log', err)
     try {
-        await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err.message)
+        await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err)
     } catch (error) {
         console.error(error)
     }
