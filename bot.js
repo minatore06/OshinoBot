@@ -117,21 +117,31 @@ client.on('messageCreate', async message => {
                 if (!debug)
                 {
                     debug = true;
-                    message.reply("El psy congroo");
+                    message.reply("El psy congroo\nhttps://cdn.donmai.us/original/bf/a5/bfa59a99a9a17fc753973071ef4694a4.gif")
+                        .then(msg => eliminazioneMess(message, msg, "10s"));
                 }
                 else
                 {
                     debug = false;
-                    message.reply("I'm back");
+                    message.reply("I'm back\nhttps://media.tenor.com/UHibsWWoOpQAAAAd/monogatari-oshino.gif")
+                        .then(msg => eliminazioneMess(message, msg, "10s"));
                 }
             } else {
-                message.reply("You're not my master and you don't know this command")
-                    .then(msg => eliminazioneMess(message, msg, "5s"));
+                if (debug){
+                    message.reply("Un umano come te non dovrebbe disturbarmi durante la mia pausa\nhttps://i.pinimg.com/originals/92/f1/72/92f1724b4a5dfe1b705bf4bac60a50c6.gif")
+                        .then(msg => eliminazioneMess(message, msg, "5s"));
+                } else {
+                    message.reply("You're not my master and you don't know this command\nhttps://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/628788cd-1b38-46ed-86e3-4af1ab94cf97/d6sysx0-f298bccb-2217-43eb-82d9-90ed972498fa.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyODc4OGNkLTFiMzgtNDZlZC04NmUzLTRhZjFhYjk0Y2Y5N1wvZDZzeXN4MC1mMjk4YmNjYi0yMjE3LTQzZWItODJkOS05MGVkOTcyNDk4ZmEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.q5YHDMz-daqna4LMoJ3N9UWfULm0H_n-P0qVy9HyNwc")
+                        .then(msg => eliminazioneMess(message, msg, "5s"));
+                }
             }
             break;
         case "!send":
-            if (debug)
+            if (debug){
+                message.reply("Ciao, al momento sono stata messa in modalità debug, per cui ti ignorerò. Ka ka!")
+                    .then(msg => eliminazioneMess(message, msg, "5s"));
                 return console.log("Modalità debug attiva, interazione ignorata");
+            }
             if (user.id !== bOwner) {
                 message.reply("You're not my master and you don't know this command")
                     .then(msg => eliminazioneMess(message, msg, "5s"));
@@ -180,7 +190,7 @@ client.on('messageCreate', async message => {
                               "icon_url": "https://media.discordapp.net/attachments/1216360069973807105/1217575491276640386/Progetto_senza_titolo_5.png?ex=6604868a&is=65f2118a&hm=963dc2ef52b66365a39c9cb4dc6392a94b59b8636b3473676c640a07c01db566&=&format=webp&quality=lossless&width=462&height=462"
                             },
                             "image": {
-                              "url": "https://cdn.discordapp.com/attachments/1216360069973807105/1217574265239506994/RUOLI_6.png?ex=66048566&is=65f21066&hm=239e79f8ebb858885c58abecd00784d6a3d65c090e7b0a4f831a80d313a6efd7&"
+                              "url": "https://cdn.discordapp.com/attachments/1216360069973807105/1217594671463796806/RUOLI_5.png?ex=66049867&is=65f22367&hm=4fbf94a760c1d4ac1b5f9123e39b235862859be1195ee1309e8a01f59a3259b1&"
                             }
                           }
                     ], 
@@ -209,8 +219,11 @@ client.on('interactionCreate', async interaction => {
         timestamp: new Date().toISOString()
     };
 
-    if (debug)
+    if (debug) {
+        interaction.reply("Ciao, al momento sono stata messa in modalità debug, per cui ti ignorerò. Ka ka!")
+            .then(msg => eliminazioneMess(null, msg, "5s"));
         return console.log(new Date().toISOString() + "\n" + "Modalità debug attiva, interazione ignorata");
+    }
     
     if(interaction.isAutocomplete()){
         let focused = interaction.options.getFocused(true)
