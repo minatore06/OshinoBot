@@ -140,6 +140,8 @@ client.on('guildCreate', async guild => {
 })
 
 client.on('messageCreate', async message => {
+    if (message.author.bot) return;
+
     let user = message.author
     let member = message.member
     let guild = message.guild
@@ -245,6 +247,31 @@ client.on('messageCreate', async message => {
             }
             break;
     }
+})
+
+client.on('messageDelete', async message => {
+    if (message.author.bot) return;
+
+    if (!message.inGuild()) return;
+    console.log(message.mentions.members.size)
+    if (message.createdTimestamp < (Date.now() - ms("5m"))) return;// message older than 5 minutes
+    if (!message.mentions.members.size) return; // no mentions
+    let member = message.member;
+    let embed = {
+        author: {
+            name: member.displayName,
+            icon_url: member.displayAvatarURL({dynamic:true})
+        },
+        title: `<a:GanyuPing_REEEEE:1217571370016178266>ghost ping rilevato<:Colpevole:602821598550032413>`,
+        description: message.content,
+        color: 0x3d3a3d,
+        footer: {
+            text: member.id,
+            icon_url: member.user.displayAvatarURL({dynamic:true})
+        },
+        timestamp: new Date().toISOString()
+    };
+    message.channel.send({embeds: [embed]});
 })
                 
 client.on('interactionCreate', async interaction => {
