@@ -227,7 +227,7 @@ client.on('interactionCreate', async interaction => {
 
     if (debug) {
         await wait(500);
-        if (interaction.isRepliable()) {
+        if (interaction.isRepliable() && !(await interaction.fetchReply())) {
             interaction.reply("Ciao, al momento sono stata messa in modalità debug, per cui ti ignorerò. Ka ka!")
                 .then(msg => eliminazioneMess(null, msg, "5s"));
         }
