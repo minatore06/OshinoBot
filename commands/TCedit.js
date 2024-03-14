@@ -5,7 +5,7 @@ module.exports = {
 	name:'TCedit',
 	async execute(interaction, client, files)
 	{
-        let voiceOwn = interaction.voiceOwn;
+        let voiceOwn = files.gConfig[interaction.guild.id]["voiceOwn"];
         if (!interaction.member.voice || !interaction.member.voice.channelId)
             return interaction.reply({content:'Devi essere connesso alla tua stanza temporanea', ephemeral: true})
 

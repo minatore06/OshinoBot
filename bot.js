@@ -17,7 +17,6 @@ var music = ["https://www.youtube.com/watch?v=Q9WcG0OMElo", "https://www.youtube
 var bumpMsg = null
 var stanzaTemp = '1216417228031787108';
 var categoriaTemp = '1216417153230569565';
-var voiceOwn = [];
 var modules = ["tempChannels"];
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -88,6 +87,7 @@ client.on('ready', async () => {
                 console.log(module)
                 gConfig[guild.id]["modules"][module] = false
             })
+            if(!gConfig[guild.id]["voiceOwn"])gConfig[guild.id]["voiceOwn"] = []
         })
     })
     fs.writeFileSync('./gConfig.json', JSON.stringify(gConfig))
@@ -102,6 +102,7 @@ client.on('guildCreate', async guild => {
     modules.forEach(module => {
         gConfig[guild.id]["modules"][module] = false
     })
+    if(!gConfig[guild.id]["voiceOwn"])gConfig[guild.id]["voiceOwn"] = []
     fs.writeFileSync('./gConfig.json', JSON.stringify(gConfig))
 })
 
@@ -242,7 +243,6 @@ client.on('interactionCreate', async interaction => {
         let intIDs = interaction.customId.split(':');
         if (intIDs[0] == "tc"){
             commandName = intIDs[0].toUpperCase() + intIDs[1];
-            interaction.voiceOwn = voiceOwn;
 
             if (client.commands.has(commandName)){
                 const command = client.commands.get(commandName);
@@ -316,6 +316,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     if(oldState){//uscito dalla stanza
         var oldChannel = oldState.channel
         var OldMember = oldState.member
+        let voiceOwn = gConfig[oldState.guild.id]["voiceOwn"]
         
         if(oldState.channel!=newState.channel){
             if(oldChannel && oldChannel.parentId == categoriaTemp && oldChannel.id != stanzaTemp) {
@@ -357,6 +358,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     if(newState){//entrato in stanza
         var newChannel = newState.channel
         var newMember = newState.member
+        let voiceOwn = gConfig[newState.guild.id]["voiceOwn"]
         
         if(newState.channel){
             if(oldState.channelId!=newState.channelId && newState.channelId == stanzaTemp) {
