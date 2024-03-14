@@ -79,8 +79,8 @@ function activityLoop(){
 client.on('ready', async () => {
     client.user.setActivity("Starting...",{type: ActivityType.Competing})
     client.user.setStatus("idle")
-    client.guilds.fetch().then(async gs => {
-        gs.forEach(guild => {
+    client.guilds.fetch().then(async gm => {
+        gm.forEach(async guild => {
             if(!gConfig[guild.id])gConfig[guild.id] = {}
             if(!gConfig[guild.id]["modules"])gConfig[guild.id]["modules"] = {}
             modules.forEach(module => {
@@ -88,6 +88,39 @@ client.on('ready', async () => {
                 gConfig[guild.id]["modules"][module] = false
             })
             if(!gConfig[guild.id]["voiceOwn"])gConfig[guild.id]["voiceOwn"] = []
+            else {
+                for(var i=0; i<gConfig[guild.id]["voiceOwn"].length; i++) {
+                    console.log(gConfig[guild.id]["voiceOwn"][i])
+                    let vState = (await client.users.fetch(gConfig[guild.id]["voiceOwn"][i][1])).voice
+                    let ch = await client.channels.fetch(gConfig[guild.id]["voiceOwn"][i][0])
+                    if (ch.members.size==0){
+                        setTimeout(function(){
+                            if(!ch)return;
+                            for (let i = 0; i < gConfig[guild.id]["voiceOwn"].length; i++){
+                                if(ch.id == gConfig[guild.id]["voiceOwn"][i][0]){
+                                    try {
+                                        if(ch.client.user.id == client.user.id)ch.delete("Stanza vuota");
+                                    } catch (err) {
+                                        console.log(new Date().toISOString() + "\n" + err)
+                                    }
+                                    if(gConfig[guild.id]["voiceOwn"][i]&&gConfig[guild.id]["voiceOwn"][i][2])clearTimeout(gConfig[guild.id]["voiceOwn"][i][2]);
+                                    gConfig[guild.id]["voiceOwn"].splice(i,1);
+                                }
+                            }
+                        }, 5000)
+                    } else if (!vState || vState.channelId != gConfig[guild.id]["voiceOwn"][i][0]){
+                        gConfig[guild.id]["voiceOwn"][i][2] = setTimeout( function(){
+                            if(!ch)return;
+                            try {
+                                if(ch.client.user.id == client.user.id)ch.delete('Proprietario assente');
+                            } catch (err) {
+                                console.log(new Date().toISOString() + "\n" + err)
+                            }
+                            gConfig[guild.id]["voiceOwn"].splice(i,1);
+                        }, 300000)
+                    } 
+                }
+            }
         })
     })
     fs.writeFileSync('./gConfig.json', JSON.stringify(gConfig))
@@ -401,7 +434,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             }else{
                 for(var i = 0; i<voiceOwn.length; i++) {
                     if(voiceOwn[i][0] === newState.channel.id && voiceOwn[i][1] === newState.member.id)
-                    clearTimeout(voiceOwn[i][2]);
+                        clearTimeout(voiceOwn[i][2]);
                 }
             }
         }
