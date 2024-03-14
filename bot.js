@@ -27,6 +27,12 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+function wait(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
+}
+
 function eliminazioneMess(message, msg, wait)//funzione per eliminare il messaggio di risposta
 {
   setTimeout(function () {
@@ -181,8 +187,8 @@ client.on('messageCreate', async message => {
                 await message.channel.send({
                     embeds: [
                         {
-                            "title": "Clubs control pannel",
-                            "description": "🔑 Se sei il proprietario di un canale temporaneo\n🕒 avrai la possibilità di: \n\n🔄 Cambiare il nome e il limite 🏷️\n🔒 Bloccare o sbloccare l'accesso del canale 🚫/✅\n➕ Aggiungere o rimuovere membri dalla whitelist ✨\n🚪 Cacciare un membro dal canale 🚷",
+                            "title": "Free Clubs control pannel",
+                            "description": "<:11:553206458838286336> Ciao,\n<:Astolfo:1217625591612837939> Hai mai voluto personalizzare la tua stanza temporanea?\n<a:hiroi_laugh:1217612251687686255> Oppure permetterne l'accesso solamente ad alcuni amici?\n<a:Chikapanic:1217618364659269697> Oppure c'è un utente col quale non vuoi stare?\n<a:Fingerspin_Rikka:1217622231564292177> Bene, perchè con questo nuovissimo pannello di controllo,\n<a:Herta_Kurukuru:1217575441204772864> potrai fare tutte queste cose utilissime!\n\n<a:Konosuba_1:1217582700165206096> (in caso di problemi o idee, contattare oshinomina)<a:Konosuba_2:1217587200435425372>",
                             "url": "https://youtu.be/D39fKQIJSBY?si=1ctTuoNtPYjclYUm",
                             "color": 16077059,
                             "footer": {
@@ -190,7 +196,7 @@ client.on('messageCreate', async message => {
                               "icon_url": "https://media.discordapp.net/attachments/1216360069973807105/1217575491276640386/Progetto_senza_titolo_5.png?ex=6604868a&is=65f2118a&hm=963dc2ef52b66365a39c9cb4dc6392a94b59b8636b3473676c640a07c01db566&=&format=webp&quality=lossless&width=462&height=462"
                             },
                             "image": {
-                              "url": "https://cdn.discordapp.com/attachments/1216360069973807105/1217594671463796806/RUOLI_5.png?ex=66049867&is=65f22367&hm=4fbf94a760c1d4ac1b5f9123e39b235862859be1195ee1309e8a01f59a3259b1&"
+                              "url": "https://media.discordapp.net/attachments/1216360069973807105/1217574265239506994/RUOLI_6.png?ex=66048566&is=65f21066&hm=239e79f8ebb858885c58abecd00784d6a3d65c090e7b0a4f831a80d313a6efd7&=&format=webp&quality=lossless&width=924&height=462"
                             }
                           }
                     ], 
@@ -220,8 +226,11 @@ client.on('interactionCreate', async interaction => {
     };
 
     if (debug) {
-        interaction.reply("Ciao, al momento sono stata messa in modalità debug, per cui ti ignorerò. Ka ka!")
-            .then(msg => eliminazioneMess(null, msg, "5s"));
+        await wait(500);
+        if (interaction.isRepliable()) {
+            interaction.reply("Ciao, al momento sono stata messa in modalità debug, per cui ti ignorerò. Ka ka!")
+                .then(msg => eliminazioneMess(null, msg, "5s"));
+        }
         return console.log(new Date().toISOString() + "\n" + "Modalità debug attiva, interazione ignorata");
     }
     
