@@ -256,6 +256,12 @@ client.on('messageDelete', async message => {
     console.log(message.mentions.members.size)
     if (message.createdTimestamp < (Date.now() - ms("5m"))) return;// message older than 5 minutes
     if (!message.mentions.members.size) return; // no mentions
+    // Define the regex pattern
+    const regex = /(https?:\/\/|http?:\/\/)?(www.)?(discord.gg|discord.io|discord.me|discord.li|discordapp.com\/invite|discord.com\/invite)\/[^\s\/]+?(?=\b)/g;
+
+    // Use the RegExp to search for matches in the message
+    const matches = message.content.match(regex);
+    if (matches) return; // invite links
     let member = message.member;
     let embed = {
         author: {
