@@ -487,9 +487,9 @@ client.on('error', async err => {
 })
 
 process.on('uncaughtException', async (err, origin) => {
-    fs.writeFileSync('./err.log', new Date().toISOString() + "\n" + err)
+    fs.writeFileSync('./err.log', new Date().toISOString() + "\n" + err + "\n" + origin)
     try {
-        await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err)
+        await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err + "\n" + origin)
     } catch (error) {
         console.error(new Date().toISOString() + "\n" + error)
     }
