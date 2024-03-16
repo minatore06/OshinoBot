@@ -55,7 +55,7 @@ module.exports = {
                                     if (client.cooldowns.get(this.name).has(interaction.user.id)) {
                                         let expirationTime = client.cooldowns.get(this.name).get(interaction.user.id) + this.cooldown * 1000;
                                         if (Date.now() < expirationTime) {
-                                            let timeLeft = (expirationTime + Date.now());
+                                            let timeLeft = expirationTime;
                                             msgContent = `Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: <t:${timeLeft}:R>.`;
                                         }
                                     } else {
