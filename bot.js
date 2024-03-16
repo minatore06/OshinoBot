@@ -387,9 +387,6 @@ client.on('interactionCreate', async interaction => {
             if (!(await interaction.fetchReply())) {
                 return interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
                     .then(msg => eliminazioneMess(null, msg, "5s"));
-            } else {
-                return interaction.followUp("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
-                    .then(msg => eliminazioneMess(null, msg, "5s"));
             }
         }
     }
