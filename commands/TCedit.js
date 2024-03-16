@@ -86,10 +86,10 @@ module.exports = {
                         await interaction.followUp({content:'Tempo scaduto', ephemeral: true})
                     }
                     return;
-                
                 }
             }
         }
-        interaction.reply({content:'Non sei il proprietario di nessuna stanza', ephemeral: true})
+        if (interaction.isRepliable() && !(await interaction.fetchReply()))
+            interaction.reply({content:'Non sei il proprietario di nessuna stanza', ephemeral: true})
 	}
 }
