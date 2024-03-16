@@ -1,4 +1,5 @@
 const { ActionRowBuilder, UserSelectMenuBuilder } = require('@discordjs/builders');
+const ms = require('ms');
 
 module.exports = {
 	name:'TCremove',
@@ -20,6 +21,14 @@ module.exports = {
                                     .setMaxValues(1)
                             )
                     ], ephemeral: true})
+                    .then(msg => {
+                        setTimeout(function () {
+                            msg.delete()
+                            .catch(err => {
+                                console.log(new Date().toISOString() + "\n" + err)
+                            });
+                        }, ms('30s'));
+                    });
                     return;
                 }
             }

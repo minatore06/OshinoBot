@@ -9,6 +9,7 @@ const gConfig = require('./gConfig.json');
 
 const client = new Client({ intents: [GatewayIntentBits.GuildPresences, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 client.commands = new Collection();
+client.cooldowns = new Collection();
 
 let debug = false;
 let files = {"config":config, "gConfig":gConfig}
@@ -91,7 +92,8 @@ client.on('ready', async () => {
             else {
                 for(var i=0; i<gConfig[guild.id]["voiceOwn"].length; i++) {
                     console.log(gConfig[guild.id]["voiceOwn"][i])
-                    let vState = (await client.users.fetch(gConfig[guild.id]["voiceOwn"][i][1])).voice
+                    let usr = await client.users.fetch(gConfig[guild.id]["voiceOwn"][i][1])
+                    let vState = usr.voice
                     let ch = await client.channels.fetch(gConfig[guild.id]["voiceOwn"][i][0])
                     if (ch.members.size==0){
                         setTimeout(function(){
@@ -108,7 +110,8 @@ client.on('ready', async () => {
                                 }
                             }
                         }, 5000)
-                    } else if (!vState || vState.channelId != gConfig[guild.id]["voiceOwn"][i][0]){
+                    } /* else if (!vState || vState.channelId != gConfig[guild.id]["voiceOwn"][i][0]){
+                        console.log("up " + usr.voice)
                         gConfig[guild.id]["voiceOwn"][i][2] = setTimeout( function(){
                             if(!ch)return;
                             try {
@@ -118,11 +121,13 @@ client.on('ready', async () => {
                             }
                             gConfig[guild.id]["voiceOwn"].splice(i,1);
                         }, 300000)
-                    } 
+                    }  */
                 }
             }
         })
     })
+    console.log(gConfig)
+    console.log(gConfig["353241710794375169"].voiceOwn)
     fs.writeFileSync('./gConfig.json', JSON.stringify(gConfig))
     console.log('Online')
     activityLoop();
@@ -321,6 +326,7 @@ client.on('interactionCreate', async interaction => {
 
     else if (interaction.isAnySelectMenu()){
         let intIDs = interaction.customId.split(':');
+        console.log("sos\n"+intIDs[0]);
         if (intIDs[0] == "TCallow"){
             interaction.users.forEach(async value => {
                 interaction.member.voice.channel.permissionOverwrites.create(value.id, {
@@ -407,6 +413,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             if(oldState.channel){
                 for(var i=0; i<voiceOwn.length; i++) {
                     if(voiceOwn[i][1] === oldState.member.id && voiceOwn[i][0] === oldState.channel.id) {
+                        console.log("down")
                         voiceOwn[i][2] = setTimeout( function(){
                             if(!oldState.channel)return;
                             try {
