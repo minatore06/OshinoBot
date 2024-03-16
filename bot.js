@@ -380,6 +380,14 @@ client.on('interactionCreate', async interaction => {
         }
         return;
     }
+
+    else if(interaction.isModalSubmit()){
+        wait(1000);
+        if (interaction.isRepliable() && !(await interaction.fetchReply())) {
+            interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
+                .then(msg => eliminazioneMess(null, msg, "5s"));
+        }
+    }
 });
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
