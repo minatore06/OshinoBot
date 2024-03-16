@@ -61,19 +61,16 @@ module.exports = {
                                         inter.member.voice.channel.setName(name);
                                         let ts = Date.now();
                                         client.cooldowns.get(this.name).set(interaction.user.id, ts);
-                                        inter.reply({content:'Nome alla stanza cambiato', ephemeral: true})
+                                        interaction.followUp({content:'Nome alla stanza cambiato', ephemeral: true})
                                     }
                                     
                                 }
                                 if (limit.length > 0) {
                                     inter.member.voice.channel.setUserLimit(limit);
-                                    if (inter.replied)
-                                        inter.editReply({content:'Nome alla stanza cambiato\nModifiche alla stanza eseguite', ephemeral: true})
-                                    else
-                                        inter.reply({content:'Modifiche alla stanza eseguite', ephemeral: true})
+                                    interaction.followUp({content:'Limite alla stanza cambiato', ephemeral: true})
                                 }
-                                if (!inter.replied)
-                                    inter.reply({content:'Niente da fare', ephemeral: true})
+                                if (name.length === 0 && limit.length === 0)
+                                    interaction.followUp({content:'Niente da fare', ephemeral: true})
                             })
                             .catch(async(err) => {
                                 console.log(new Date().toISOString() + "\n" + err)
