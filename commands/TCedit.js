@@ -12,8 +12,8 @@ module.exports = {
         if (client.cooldowns.get(this.name).has(interaction.user.id)) {
             let expirationTime = client.cooldowns.get(this.name).get(interaction.user.id) + this.cooldown * 1000;
             if (Date.now() < expirationTime) {
-                let timeLeft = (expirationTime - Date.now()) / 1000;
-                return interaction.reply({content:`Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: \`${timeLeft.toFixed(0)} secondi\`.`, ephemeral: true});
+                let timeLeft = (expirationTime - Date.now());
+                return interaction.reply({content:`Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: <t:${timeLeft}:R>.`, ephemeral: true});
             }
         }
         let voiceOwn = files.gConfig[interaction.guild.id]["voiceOwn"];
