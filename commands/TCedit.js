@@ -74,7 +74,8 @@ module.exports = {
                                 }
                                 if (!msgContent.length)
                                     msgContent = 'Niente da fare';
-                                inter.reply({content:msgContent, ephemeral: true})
+                                if (inter.isRepliable())
+                                    inter.reply({content:msgContent, ephemeral: true})
                             })
                             .catch(async(err) => {
                                 console.log(new Date().toISOString() + "\n" + err)
