@@ -11,8 +11,6 @@ module.exports = {
 		let target = interaction.user
 		if(target.id!=files.config.bOwner)return await interaction.reply({content:"El psy kongroo!", ephemeral:true})
 		await interaction.deferReply({ephemeral:true})
-		console.log(files.gConfig)
-		console.log(files.gConfig["353241710794375169"]["voiceOwn"])
 		fs.writeFileSync('./gConfig.json', JSON.stringify(files.gConfig))
 		await interaction.editReply("Save complete")
 	}

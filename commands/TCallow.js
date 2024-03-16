@@ -12,8 +12,6 @@ module.exports = {
         for(var i=0; i < voiceOwn.length; i++) {
             if(voiceOwn[i][0]===interaction.member.voice.channelId) {
                 if(voiceOwn[i][1]===interaction.member.id) {
-                    console.log(voiceOwn[i][0])
-                    console.log(voiceOwn[i][1])
                     interaction.reply({content:'Seleziona un utente', components: [
                         new ActionRowBuilder()
                             .addComponents(
