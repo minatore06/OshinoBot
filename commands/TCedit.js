@@ -9,13 +9,7 @@ module.exports = {
         if (!client.cooldowns.has(this.name)) {
             client.cooldowns.set(this.name, new Collection());
         }
-        if (client.cooldowns.get(this.name).has(interaction.user.id)) {
-            let expirationTime = client.cooldowns.get(this.name).get(interaction.user.id) + this.cooldown * 1000;
-            if (Date.now() < expirationTime) {
-                let timeLeft = (expirationTime - Date.now());
-                return interaction.reply({content:`Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: <t:${timeLeft}:R>.`, ephemeral: true});
-            }
-        }
+        
         let voiceOwn = files.gConfig[interaction.guild.id]["voiceOwn"];
         if (!interaction.member.voice || !interaction.member.voice.channelId)
             return interaction.reply({content:'Devi essere connesso alla tua stanza temporanea', ephemeral: true})
@@ -55,18 +49,31 @@ module.exports = {
                             .then(async(inter) => {
                                 let name = inter.fields.getTextInputValue("name")
                                 let limit = inter.fields.getTextInputValue("limit")
-                                let ts;
 
                                 if (name.length > 0) {
-                                    inter.member.voice.channel.setName(name);
-                                    ts = Date.now();
+                                    if (client.cooldowns.get(this.name).has(interaction.user.id)) {
+                                        let expirationTime = client.cooldowns.get(this.name).get(interaction.user.id) + this.cooldown * 1000;
+                                        if (Date.now() < expirationTime) {
+                                            let timeLeft = (expirationTime - Date.now());
+                                            interaction.followUp({content:`Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: <t:${timeLeft}:R>.`, ephemeral: true});
+                                        }
+                                    } else {
+                                        inter.member.voice.channel.setName(name);
+                                        let ts = Date.now();
+                                        client.cooldowns.get(this.name).set(interaction.user.id, ts);
+                                        inter.reply({content:'Nome alla stanza cambiato', ephemeral: true})
+                                    }
+                                    
                                 }
                                 if (limit.length > 0) {
                                     inter.member.voice.channel.setUserLimit(limit);
-                                    ts = Date.now();
+                                    if (inter.replied)
+                                        inter.editReply({content:'Nome alla stanza cambiato\nModifiche alla stanza eseguite', ephemeral: true})
+                                    else
+                                        inter.reply({content:'Modifiche alla stanza eseguite', ephemeral: true})
                                 }
-                                inter.reply({content:'Modifiche alla stanza eseguite', ephemeral: true})
-                                client.cooldowns.get(this.name).set(interaction.user.id, ts);
+                                if (!inter.replied)
+                                    inter.reply({content:'Niente da fare', ephemeral: true})
                             })
                             .catch(async(err) => {
                                 console.log(new Date().toISOString() + "\n" + err)
