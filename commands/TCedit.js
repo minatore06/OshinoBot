@@ -18,7 +18,7 @@ module.exports = {
             if(voiceOwn[i][0]===interaction.member.voice.channelId) {
                 if(voiceOwn[i][1]===interaction.member.id) {
                     const modal = new ModalBuilder()
-                        .setCustomId('TCedit')
+                        .setCustomId('TCedit'+interaction.id)
                         .setTitle('Modifica la tua stanza')
                         .addComponents(
                             new ActionRowBuilder().addComponents(
@@ -43,7 +43,7 @@ module.exports = {
                             console.log(new Date().toISOString() + "\n" + err)
                             return await interaction.reply({content: 'C\'è stato un errore', ephemeral: true})
                         })
-                    const filter = (inter) => inter.customId === 'TCedit';
+                    const filter = (inter) => inter.customId === 'TCedit'+interaction.id && inter.user.id === interaction.user.id;
                     try {
                         await interaction.awaitModalSubmit({filter, time:60000})
                             .then(async(inter) => {
@@ -89,7 +89,6 @@ module.exports = {
                 }
             }
         }
-        if (interaction.isRepliable() && !(await interaction.fetchReply()))
-            interaction.reply({content:'Non sei il proprietario di nessuna stanza', ephemeral: true})
+        interaction.reply({content:'Non sei il proprietario di nessuna stanza', ephemeral: true})
 	}
 }
