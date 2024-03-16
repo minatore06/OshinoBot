@@ -383,14 +383,22 @@ client.on('interactionCreate', async interaction => {
 
     else if(interaction.isModalSubmit()){
         wait(1000);
-        if (interaction.isRepliable() && !(await interaction.fetchReply())) {
+        if (interaction.isRepliable()) {
             return interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
+                .then(msg => eliminazioneMess(null, msg, "5s"));
+        }
+        if (!(await interaction.fetchReply())) {
+            return interaction.followUp("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
                 .then(msg => eliminazioneMess(null, msg, "5s"));
         }
     }
     if (interaction && interaction.isRepliable()) {
-        interaction.reply("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
-            .then(msg => eliminazioneMess(null, msg, "5s"));
+        if (!(await interaction.fetchReply()))
+            interaction.reply("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
+                .then(msg => eliminazioneMess(null, msg, "5s"));
+        else
+            interaction.followUp("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
+                .then(msg => eliminazioneMess(null, msg, "5s"));
     }
 });
 
