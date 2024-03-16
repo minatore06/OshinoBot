@@ -71,10 +71,10 @@ function activityLoop(){
                     client.user.setActivity("yooooooo, watch this",{type: ActivityType.Streaming, url:ar[rId]})
 
                     activityLoop();
-                }, 30000);
+                }, 60000);
             }, 60000);
-        }, 30000);
-    }, 60000);
+        }, 60000);
+    }, 120000);
 }
 
 client.on('ready', async () => {
@@ -384,9 +384,13 @@ client.on('interactionCreate', async interaction => {
     else if(interaction.isModalSubmit()){
         wait(1000);
         if (interaction.isRepliable() && !(await interaction.fetchReply())) {
-            interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
+            return interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
                 .then(msg => eliminazioneMess(null, msg, "5s"));
         }
+    }
+    if (interaction && interaction.isRepliable()) {
+        interaction.reply("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
+            .then(msg => eliminazioneMess(null, msg, "5s"));
     }
 });
 
