@@ -384,12 +384,13 @@ client.on('interactionCreate', async interaction => {
     else if(interaction.isModalSubmit()){
         wait(1000);
         if (interaction.isRepliable()) {
-            return interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
-                .then(msg => eliminazioneMess(null, msg, "5s"));
-        }
-        if (!(await interaction.fetchReply())) {
-            return interaction.followUp("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
-                .then(msg => eliminazioneMess(null, msg, "5s"));
+            if (!(await interaction.fetchReply())) {
+                return interaction.reply("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
+                    .then(msg => eliminazioneMess(null, msg, "5s"));
+            } else {
+                return interaction.followUp("Sembra che un modulo sia andato disperso, me ne libererò subito, ka ka!")
+                    .then(msg => eliminazioneMess(null, msg, "5s"));
+            }
         }
     }
     else {
