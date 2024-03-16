@@ -47,8 +47,6 @@ module.exports = {
                     try {
                         await interaction.awaitModalSubmit({filter, time:60000})
                             .then(async(inter) => {
-                                if (!inter)
-                                    return;
                                 let name = inter.fields.getTextInputValue("name")
                                 let limit = inter.fields.getTextInputValue("limit")
                                 let msgContent = '';

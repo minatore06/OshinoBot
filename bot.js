@@ -496,6 +496,7 @@ client.on('error', async err => {
     try {
         await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err.message)
         if (client && err.discordAPIError) client.user.lastMessage.channel.send(err.discordAPIRError.method)
+        console.log(new Date().toISOString() + "\n" + err)
     } catch (error) {
         console.error(new Date().toISOString() + "\n" + error)
     }
@@ -505,6 +506,7 @@ process.on('uncaughtException', async (err, origin) => {
     fs.writeFileSync('./err.log', new Date().toISOString() + "\n" + err + "\n" + origin)
     try {
         await (await client.users.fetch(bOwner)).send("Errore imprevisto\n" + err + "\n" + origin)
+        console.log(new Date().toISOString() + "\n" + err + "\n" + origin)
     } catch (error) {
         console.error(new Date().toISOString() + "\n" + error)
     }
