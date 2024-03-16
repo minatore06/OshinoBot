@@ -392,13 +392,15 @@ client.on('interactionCreate', async interaction => {
                 .then(msg => eliminazioneMess(null, msg, "5s"));
         }
     }
-    if (interaction && interaction.isRepliable()) {
-        if (!(await interaction.fetchReply()))
-            interaction.reply("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
-                .then(msg => eliminazioneMess(null, msg, "5s"));
-        else
-            interaction.followUp("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
-                .then(msg => eliminazioneMess(null, msg, "5s"));
+    else {
+        if (interaction && interaction.isRepliable()) {
+            if (!(await interaction.fetchReply()))
+                interaction.reply("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
+                    .then(msg => eliminazioneMess(null, msg, "5s"));
+            else
+                interaction.followUp("Sembra che qualcosa sia andato storto, mi occuperò io dei tuoi errori, come al solito, ka ka!")
+                    .then(msg => eliminazioneMess(null, msg, "5s"));
+        }
     }
 });
 
