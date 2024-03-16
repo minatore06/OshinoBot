@@ -49,28 +49,32 @@ module.exports = {
                             .then(async(inter) => {
                                 let name = inter.fields.getTextInputValue("name")
                                 let limit = inter.fields.getTextInputValue("limit")
+                                let msgContent = '';
 
                                 if (name.length > 0) {
                                     if (client.cooldowns.get(this.name).has(interaction.user.id)) {
                                         let expirationTime = client.cooldowns.get(this.name).get(interaction.user.id) + this.cooldown * 1000;
                                         if (Date.now() < expirationTime) {
                                             let timeLeft = (expirationTime - Date.now());
-                                            interaction.followUp({content:`Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: <t:${timeLeft}:R>.`, ephemeral: true});
+                                            msgContent = `Puoi cambiare il nome alla stanza solo ogni 10 minuti.\nTempo rimanente: <t:${timeLeft}:R>.`;
                                         }
                                     } else {
                                         inter.member.voice.channel.setName(name);
                                         let ts = Date.now();
                                         client.cooldowns.get(this.name).set(interaction.user.id, ts);
-                                        interaction.followUp({content:'Nome alla stanza cambiato', ephemeral: true})
+                                        msgContent = 'Nome alla stanza cambiato';
                                     }
                                     
                                 }
                                 if (limit.length > 0) {
                                     inter.member.voice.channel.setUserLimit(limit);
-                                    interaction.followUp({content:'Limite alla stanza cambiato', ephemeral: true})
+                                    if (msgContent.length > 0)
+                                        msgContent += '\n';
+                                    msgContent +='Limite alla stanza cambiato';
                                 }
-                                if (name.length === 0 && limit.length === 0)
-                                    interaction.followUp({content:'Niente da fare', ephemeral: true})
+                                if (!msgContent.length)
+                                    msgContent = 'Niente da fare';
+                                inter.reply({content:msgContent, ephemeral: true})
                             })
                             .catch(async(err) => {
                                 console.log(new Date().toISOString() + "\n" + err)
