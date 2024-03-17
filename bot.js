@@ -213,15 +213,15 @@ client.on('messageCreate', async message => {
                     .addComponents(
                         new ButtonBuilder()
                             .setCustomId('tc:allow')
-                            .setLabel("Permetti membro")
+                            .setLabel("Permetti utente")
                             .setStyle(ButtonStyle.Success),
                         new ButtonBuilder()
                             .setCustomId('tc:deny')
-                            .setLabel("Nega membro")
+                            .setLabel("Nega utente")
                             .setStyle(ButtonStyle.Danger),
                         new ButtonBuilder()
                             .setCustomId('tc:remove')
-                            .setLabel("Rimuovi membro")
+                            .setLabel("Rimuovi utente")
                             .setStyle(ButtonStyle.Danger)
                     )
                 
