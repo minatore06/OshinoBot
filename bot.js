@@ -18,7 +18,7 @@ var music = ["https://www.youtube.com/watch?v=Q9WcG0OMElo", "https://www.youtube
 var bumpMsg = null
 var stanzaTemp = '1216417228031787108';
 var categoriaTemp = '1216417153230569565';
-var modules = ["tempChannels"];
+var modules = ["tempChannels", "ghostPing"];
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -258,6 +258,7 @@ client.on('messageDelete', async message => {
     if (message.author.bot) return;
 
     if (!message.inGuild()) return;
+    if (!gConfig[message.guild.id][modules]["ghostPing"]) return;
     console.log(message.mentions.members.size)
     if (message.createdTimestamp < (Date.now() - ms("5m"))) return;// message older than 5 minutes
     if (!message.mentions.members.size) return; // no mentions
