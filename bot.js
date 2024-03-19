@@ -258,7 +258,7 @@ client.on('messageDelete', async message => {
     if (message.author.bot) return;
 
     if (!message.inGuild()) return;
-    if (!gConfig[message.guild.id][modules]["ghostPing"]) return;
+    if (!gConfig[message.guild.id]["modules"]["ghostPing"]) return;
     console.log(message.mentions.members.size)
     if (message.createdTimestamp < (Date.now() - ms("5m"))) return;// message older than 5 minutes
     if (!message.mentions.members.size) return; // no mentions
